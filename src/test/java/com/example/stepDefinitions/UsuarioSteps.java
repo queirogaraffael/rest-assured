@@ -1,18 +1,18 @@
-package stepDefinitions;
+package com.example.stepDefinitions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
-import services.UsuarioService;
+import com.example.services.UsuarioApiClient;
 
-public class UsuarioSteps {
+public class  UsuarioSteps {
 
     private Response response;
 
     private String body;
     private String idUsuario;
-    private final UsuarioService usuarioService = new UsuarioService();
+    private final UsuarioApiClient usuarioService = new UsuarioApiClient();
 
     @Given("Eu tenho os dados para cadastrar um novo usuario")
     public void eu_tenho_os_dados_para_cadastrar_um_novo_usuario() {

@@ -23,4 +23,5 @@ public class Usuario {
 
     private String senha;
     private UserRole role;
+
 }

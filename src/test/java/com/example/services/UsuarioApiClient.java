@@ -1,37 +1,38 @@
-package services;
+package com.example.services;
 
 
+import com.example.entities.usuario.UserRole;
+import com.example.entities.usuario.Usuario;
 import com.github.javafaker.Faker;
-import dto.UsuarioDto;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
-public class UsuarioService {
+public class UsuarioApiClient {
 
     private Response response;
     private String requestBody;
     private String idUsuario;
-    private UsuarioDto usuarioDto;
+    private Usuario usuario;
     private Faker faker;
     private String novoIdUsuario;
 
     public String gerarDadosUsuario(){
         faker = new Faker();
 
-        usuarioDto = new UsuarioDto();
-        usuarioDto.setNome(faker.name().name());
-        usuarioDto.setEmail(faker.internet().emailAddress());
-        usuarioDto.setSenha("123456");
-        usuarioDto.setAdministrador("true");
+        usuario = new Usuario();
+        usuario.setNome(faker.name().name());
+        usuario.setEmail(faker.internet().emailAddress());
+        usuario.setSenha("123456");
+        usuario.setRole(UserRole.USER);
 
         requestBody = "{\n" +
-                "  \"nome\": \""+usuarioDto.getNome()+"\",\n" +
-                "  \"email\": \""+usuarioDto.getEmail()+"\",\n" +
-                "  \"password\": \""+ usuarioDto.getSenha()+"\",\n" +
-                "  \"administrador\": \""+ usuarioDto.getAdministrador()+"\"\n" +
+                "  \"nome\": \""+usuario.getNome()+"\",\n" +
+                "  \"email\": \""+usuario.getEmail()+"\",\n" +
+                "  \"password\": \""+ usuario.getSenha()+"\",\n" +
+                "  \"role\": \""+ usuario.getRole()+"\"\n" +
                 "}";
 
         return requestBody;
@@ -99,10 +100,10 @@ public class UsuarioService {
             assertEquals(novoIdUsuario, jsonPathEvaluator.get("_id"));
         }
         else {
-            assertEquals(usuarioDto.getNome(), jsonPathEvaluator.get("nome"));
-            assertEquals(usuarioDto.getEmail(), jsonPathEvaluator.get("email"));
-            assertEquals(usuarioDto.getSenha(), jsonPathEvaluator.get("password"));
-            assertEquals(usuarioDto.getAdministrador(), jsonPathEvaluator.get("administrador"));
+            assertEquals(usuario.getNome(), jsonPathEvaluator.get("nome"));
+            assertEquals(usuario.getEmail(), jsonPathEvaluator.get("email"));
+            assertEquals(usuario.getSenha(), jsonPathEvaluator.get("password"));
+            assertEquals(usuario.getRole(), jsonPathEvaluator.get("administrador"));
             assertEquals(statusCode, response.getStatusCode());
             assertEquals(idUsuario, jsonPathEvaluator.get("_id"));
         }
