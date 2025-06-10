@@ -4,6 +4,7 @@ Este projeto foi desenvolvido por mim, Raffael Queiroga, com base no vídeo tuto
 
 ## Tecnologias Utilizadas
 - **Java 8**: Linguagem de programação para o desenvolvimento dos testes.
+- **Spring Boot 2.7**: Framework para simplificar o desenvolvimento de aplicações Java, responsável por gerenciar o ciclo de vida, injeção de dependências e configuração automática do projeto.
 - **JUnit**: Framework para testes unitários.
 - **Cucumber**: Ferramenta de BDD (Behavior Driven Development) para escrita dos testes.
 - **Rest Assured**: Biblioteca para automação de testes de APIs RESTful.
