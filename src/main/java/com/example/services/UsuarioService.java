@@ -14,17 +14,33 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     public UsuarioResponseDTO create(UsuarioCreateDTO usuarioCreateDTO) {
-        Usuario usuario = new Usuario(null, usuarioCreateDTO.getNome(), usuarioCreateDTO.getEmail(), usuarioCreateDTO.getSenha(), usuarioCreateDTO.getRole());
+        boolean isAdmin = Boolean.parseBoolean(usuarioCreateDTO.getAdministrador());
+
+        Usuario usuario = new Usuario(
+                usuarioCreateDTO.getNome(),
+                usuarioCreateDTO.getEmail(),
+                usuarioCreateDTO.getPassword(),
+                isAdmin
+        );
         usuarioRepository.save(usuario);
-        return new UsuarioResponseDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getRole());
+
+        return new UsuarioResponseDTO(
+                usuario.getId().toString(),
+                usuario.getNome(),
+                usuario.getEmail(),
+                String.valueOf(usuario.isAdministrador())
+        );
     }
 
+    public UsuarioResponseDTO getUsuarioByEmail(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
 
-    public UsuarioResponseDTO getUsuarioByEmail(String email){
-        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
-        return new UsuarioResponseDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getRole());
-
+        return new UsuarioResponseDTO(
+                usuario.getId().toString(),
+                usuario.getNome(),
+                usuario.getEmail(),
+                String.valueOf(usuario.isAdministrador())
+        );
     }
-
-
 }

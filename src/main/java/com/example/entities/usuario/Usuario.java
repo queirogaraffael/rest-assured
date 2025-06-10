@@ -1,8 +1,6 @@
 package com.example.entities.usuario;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,10 +8,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode(of = "id")
+@ToString
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
@@ -22,6 +22,12 @@ public class Usuario {
     private String email;
 
     private String senha;
-    private UserRole role;
+    private boolean administrador;
 
+    public Usuario(String nome, String email, String senha, boolean administrador) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.administrador = administrador;
+    }
 }

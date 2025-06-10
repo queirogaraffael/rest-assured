@@ -1,23 +1,31 @@
 package com.example.entities.usuario;
 
 public enum UserRole {
-    ADMIN("Administrador", "Acesso total ao sistema"),
-    USER("Usuário", "Acesso limitado");
+    ADMIN("Administrador", "true"),
+    USER("Usuário", "false");
 
     private final String displayName;
-    private final String description;
+    private final String apiValue;
 
-    UserRole(String displayName, String description) {
+    UserRole(String displayName, String apiValue) {
         this.displayName = displayName;
-        this.description = description;
+        this.apiValue = apiValue;
     }
 
     public String getDisplayName() {
         return displayName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getApiValue() {
+        return apiValue;
+    }
+
+    public static UserRole fromApiValue(String apiValue) {
+        for (UserRole role : UserRole.values()) {
+            if (role.getApiValue().equalsIgnoreCase(apiValue)) {
+                return role;
+            }
+        }
+        throw new IllegalArgumentException("Valor de API de Role desconhecido: " + apiValue);
     }
 }
-
